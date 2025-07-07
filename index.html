@@ -1,35 +1,48 @@
-<!-- index.html -->
+<!-- index.html — CDN‑based with local fallback (libs at project root) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Online Brochure</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;background:#eaeaea;display:flex;justify-content:center;align-items:center;min-height:100vh}
+    #flipbook{width:1000px;height:1414px}
+    #flipbook .page{width:100%;height:100%;overflow:hidden;background:#fff}
+    #flipbook img{width:100%;height:100%;object-fit:cover}
+  </style>
 </head>
 <body>
   <div id="flipbook">
-    <div><img src="images/new price.jpg" alt="صفحه ۱"></div>
-    <div><img src="images/new price2.jpg" alt="صفحه ۲"></div>
-    <div><img src="images/new price3.jpg" alt="صفحه ۲"></div>
-    <!-- صفحات دیگه رو به همین شکل اضافه کن -->
+    <div class="page"><img src="images/page1.jpg" alt="Page 1"/></div>
+    <div class="page"><img src="images/page2.jpg" alt="Page 2"/></div>
+    <!-- duplicate the line above for each additional page; total pages must be even -->
   </div>
 
-    <!-- JS libraries -->
+  <!-- ① jQuery CDN with local fallback -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4/turn.min.js"></script>
+  <script>window.jQuery||document.write('<script src="jquery-3.7.1.min.js"><\\/script>');</script>
 
-  <!-- بلافاصله بعد از turn.js این اسکریپت را قرار بده -->
+  <!-- ② Turn.js CDN with local fallback -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.js" crossorigin="anonymous"></script>
+  <script>if(!window.jQuery.fn.turn){document.write('<script src="turn.min.js"><\\/script>');}</script>
+
+  <!-- ③ Initialise flipbook safely -->
   <script>
-    $(function () {
+    $(function(){
+      if(!$.fn.turn){console.error('Turn.js still missing – ensure turn.min.js is in project root or CDN reachable');return;}
       $('#flipbook').turn({
-        width: 1000,     // یا 1414 اگر صفحه A4 کامل می‌خواهی
-        height: 1414,
-        autoCenter: true,
-        elevation: 50,
-        gradients: true
+        width:1000,
+        height:1414,
+        autoCenter:true,
+        display:'double',
+        gradients:true,
+        elevation:50,
+        acceleration:true
       });
+      console.log('Flipbook initialised');
     });
   </script>
 </body>
 </html>
-
