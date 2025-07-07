@@ -14,8 +14,22 @@
     <!-- صفحات دیگه رو به همین شکل اضافه کن -->
   </div>
 
+    <!-- JS libraries -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4/turn.min.js"></script>
-  <script src="script.js"></script>
+
+  <!-- بلافاصله بعد از turn.js این اسکریپت را قرار بده -->
+  <script>
+    $(function () {
+      $('#flipbook').turn({
+        width: 1000,     // یا 1414 اگر صفحه A4 کامل می‌خواهی
+        height: 1414,
+        autoCenter: true,
+        elevation: 50,
+        gradients: true
+      });
+    });
+  </script>
 </body>
 </html>
+
